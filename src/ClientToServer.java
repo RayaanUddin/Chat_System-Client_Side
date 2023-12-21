@@ -40,13 +40,13 @@ public class ClientToServer extends Thread {
     public void run() {
         ObjectInputStream inputStream = null;
         try {
-            inputStream = new ObjectInputStream(serverSocket.getInputStream());
-        } catch (Exception e) {
-            System.out.println("Error occurred receiving from server");
-            return;
-        }
-        try {
             while (true) {
+                try {
+                    inputStream = new ObjectInputStream(serverSocket.getInputStream());
+                } catch (Exception e) {
+                    System.out.println("Error occurred receiving from server");
+                    return;
+                }
                 if (!awaitingResponse(inputStream)) {
                     return;
                 }
