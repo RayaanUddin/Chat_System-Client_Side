@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.*;
 import java.net.*;
 
@@ -27,6 +28,10 @@ public class ClientToServer extends Thread {
         Packet packet;
         try {
             packet = (Packet) inputStream.readObject();
+
+            if (packet.isMessage()) {
+                System.out.println(packet.getClientDetails().getName() + "[" + packet.getClientDetails().getConnectionId() + "]: " + packet.getMessage() + "    " + packet.getDateTime());
+            }
             if (debug) {
                 System.out.println(packet.getMessage());
             }
