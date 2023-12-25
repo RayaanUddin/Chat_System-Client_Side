@@ -4,7 +4,6 @@ import java.net.*;
 
 public class ClientToServer extends Thread {
 
-    final private boolean debug = true;
     final private Socket serverSocket;
 
     public ClientToServer(Socket sSocket) {
@@ -31,9 +30,6 @@ public class ClientToServer extends Thread {
 
             if (packet.isMessage()) {
                 System.out.println(packet.getClientDetails().getName() + "[" + packet.getClientDetails().getConnectionId() + "]: " + packet.getMessage() + "    " + packet.getDateTime());
-            }
-            if (debug) {
-                System.out.println(packet.getMessage());
             }
             return true;
         } catch (IOException e) {
