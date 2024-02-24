@@ -3,17 +3,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     static JFrame frameMain;
-    static ClientToServer serverConnection;
+    static Server serverConnection;
     private JTextField textMessage;
     private JButton buttonSend;
     private JPanel panelMain;
     private JLabel labelMessages;
+    public static Main main;
 
     public void newMessage(String message) {
         labelMessages.setText(labelMessages.getText() + "\n" + message);
@@ -29,23 +29,47 @@ public class Main {
         });
     }
 
+    public void addMessage(Object message) {
+        labelMessages.setText(labelMessages.getText() + "<br>" + message.toString());
+    }
+
     public static void main(String[] args) {
-        Socket serverSocket;
-        Scanner scanner = new Scanner(System.in);
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
         try {
-            serverSocket = new Socket("127.0.0.1", 5004);
+            serverConnection = new Server(new Socket("127.0.0.1", 5004));
+            serverConnection.start();
         } catch (IOException e){
             System.out.println("Unable to connect to server");
             return;
         }
-        serverConnection = new ClientToServer(serverSocket);
-        serverConnection.start();
+
+
         frameMain = new JFrame("Main");
-        frameMain.setVisible(true);
-        Main main = new Main();
+        main = new Main();
         frameMain.setContentPane(main.panelMain);
-        main.labelMessages.setText("Hello World!");
+        frameMain.setSize(500,600);
+        main.labelMessages.setText("<html>");
+
+
+        JMenu file =  new JMenu("File");
+        JMenuItem setName = new JMenuItem("Set Name");
+        file.add(setName);
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(file);
+        frameMain.setJMenuBar(menuBar);
+
+        frameMain.setVisible(true);
         frameMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        setName.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == setName) {
+                    JOptionPane.showInputDialog("What do you want to set your name too?");
+                }
+            }
+        });
         //while (true) {
             //serverConnection.sendToServer(scanner.nextLine());
         //}

@@ -1,15 +1,13 @@
-import java.awt.*;
 import java.io.*;
 import java.net.*;
 
-public class ClientToServer extends Thread {
+public class Server extends Thread {
 
-    final private Socket serverSocket;
+    private final Socket serverSocket;
 
-    public ClientToServer(Socket sSocket) {
-        serverSocket = sSocket;
+    public Server(Socket serverSocket) {
+        this.serverSocket = serverSocket;
     }
-
     public boolean sendToServer(String msg) {
         PrintWriter outputStream = null;
         try {
@@ -26,11 +24,16 @@ public class ClientToServer extends Thread {
     private boolean awaitingResponse(ObjectInputStream inputStream) throws ClassNotFoundException {
         Packet packet;
         try {
+            System.out.println("Waiting for packet..");
             packet = (Packet) inputStream.readObject();
+            System.out.println(packet);
 
             if (packet.isMessage()) {
-                System.out.println(packet.getClientDetails().getName() + "[" + packet.getClientDetails().getConnectionId() + "]: " + packet.getMessage() + "    " + packet.getDateTime());
+                System.out.println("Message received");
+                // For UI
+                Main.main.addMessage(packet);
             }
+            System.out.println("Packet received successfully");
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,12 +47,10 @@ public class ClientToServer extends Thread {
             while (true) {
                 try {
                     inputStream = new ObjectInputStream(serverSocket.getInputStream());
+                    if (!awaitingResponse(inputStream)) {
+                        return;
+                    }
                 } catch (Exception e) {
-                    System.out.println("Error occurred receiving from server");
-                    return;
-                }
-                if (!awaitingResponse(inputStream)) {
-                    return;
                 }
             }
         } catch (Exception e){

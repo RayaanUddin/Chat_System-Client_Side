@@ -1,3 +1,5 @@
+/*Holds data being transmitted to clients from server. Can either contain a message or a command*/
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -30,11 +32,19 @@ public class Packet implements Serializable {
         return date.format(DateTimeFormatter.ofPattern("dd-MM")) + " " + time.getHour() + ":" + time.getMinute();
     }
 
+    public void setAsCommand() {
+        this.type = "command";
+    }
+
     public ClientDetails getClientDetails() {
         return senderDetails;
     }
 
     public boolean isMessage() {
         return type.equalsIgnoreCase("message");
+    }
+
+    public String toString() {
+        return senderDetails.getName() + "[" + senderDetails.getConnectionId() + "]: " + message + "    " + getDateTime();
     }
 }
