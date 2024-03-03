@@ -13,6 +13,8 @@ public class Main {
     private JButton buttonSend;
     private JPanel panelMain;
     private JLabel labelMessages;
+    private JPanel clientsConnected_Panel;
+    private JLabel clientsConnected_Label;
     public static Main main;
 
     public void newMessage(String message) {
@@ -23,7 +25,7 @@ public class Main {
         buttonSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                serverConnection.sendToServer(textMessage.getText());
+                serverConnection.sendMessageToServer(textMessage.getText());
                 textMessage.setText("");
             }
         });
@@ -38,6 +40,7 @@ public class Main {
         try {
             serverConnection = new Server(new Socket("127.0.0.1", 5004));
             serverConnection.start();
+            System.out.println("Connected to server");
         } catch (IOException e){
             System.out.println("Unable to connect to server");
             return;
@@ -66,12 +69,12 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == setName) {
-                    JOptionPane.showInputDialog("What do you want to set your name too?");
+                    String newName = JOptionPane.showInputDialog("What do you want to set your name too?");
+                    if (newName != null) {
+                        System.out.println("Setting name to: " + newName);
+                    }
                 }
             }
         });
-        //while (true) {
-            //serverConnection.sendToServer(scanner.nextLine());
-        //}
     }
 }
