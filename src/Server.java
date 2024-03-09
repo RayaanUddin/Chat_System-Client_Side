@@ -18,6 +18,7 @@ public class Server extends Thread {
     public boolean sendToServer(Object obj) {
         try {
             outputStream.writeObject(obj);
+            outputStream.reset();
             return true;
         } catch (Exception e) {
             System.out.println("Error occurred sending to server");
@@ -27,7 +28,15 @@ public class Server extends Thread {
 
     // Send message to server
     public boolean sendMessageToServer(String input) {
-        return sendToServer(new Packet(clientDetails, input.split("#")));
+        Packet packet = new Packet(clientDetails, input.split("#"));
+        System.out.println("Sending message to server.." + packet);
+        return sendToServer(packet);
+    }
+
+    // Change name
+    public boolean changeName(String name) {
+        this.clientDetails.setName(name);
+        return sendToServer(new Packet(this.clientDetails, new String[]{"name", name}).setAsCommand());
     }
 
     // Receive input from server (waiting)

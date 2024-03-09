@@ -71,7 +71,11 @@ public class Main {
                 if (e.getSource() == setName) {
                     String newName = JOptionPane.showInputDialog("What do you want to set your name too?");
                     if (newName != null) {
-                        System.out.println("Setting name to: " + newName);
+                        if (serverConnection.changeName(newName)) {
+                            System.out.println("Name changed");
+                        } else {
+                            System.out.println("Name change failed");
+                        }
                     }
                 }
             }
