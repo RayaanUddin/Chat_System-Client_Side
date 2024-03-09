@@ -60,6 +60,12 @@ public class Server extends Thread {
                             break;
                         case "clientlist":
                             System.out.println("Client list received");
+                            String clientList = "";
+                            for (int i=1; i<packet.getArguments().length; i++) {
+                                clientList = clientList + packet.getArguments()[i] + "<br>";
+                            }
+                            System.out.println(clientList);
+                            Main.main.setConnClientList(clientList);
                             break;
                         case "clientdetails":
                             System.out.println("Client details received");

@@ -13,15 +13,26 @@ public class Main {
     private JButton buttonSend;
     private JPanel panelMain;
     private JLabel labelMessages;
-    private JPanel clientsConnected_Panel;
-    private JLabel clientsConnected_Label;
+    private JLabel connClientList;
     public static Main main;
 
-    public void newMessage(String message) {
-        labelMessages.setText(labelMessages.getText() + "\n" + message);
-    }
-
     public Main() {
+        frameMain.setSize(500, 600);
+        labelMessages.setText("<html>");
+
+        // Menu bar
+        JMenu file =  new JMenu("File");
+        JMenuItem setName = new JMenuItem("Set Name");
+        file.add(setName);
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(file);
+        frameMain.setJMenuBar(menuBar);
+        frameMain.setVisible(true);
+        frameMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Action listeners
+
+        // Send message to server
         buttonSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -29,46 +40,8 @@ public class Main {
                 textMessage.setText("");
             }
         });
-    }
 
-    public void addMessage(Object message) {
-        labelMessages.setText(labelMessages.getText() + "<br>" + message.toString());
-    }
-
-    public static void main(String[] args) {
-        // Connect to server
-        try {
-            serverConnection = new Server(new Socket("127.0.0.1", 5004));
-            serverConnection.start();
-            System.out.println("Connected to server");
-        } catch (IOException e){
-            System.out.println("Unable to connect to server");
-            return;
-        }
-
-        // Use Mac OS X menu bar
-        if (System.getProperty("os.name").startsWith("Mac")) {
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-        }
-
-        frameMain = new JFrame("Main");
-        main = new Main();
-        frameMain.setContentPane(main.panelMain);
-        frameMain.setSize(500,600);
-        main.labelMessages.setText("<html>");
-
-
-        JMenu file =  new JMenu("File");
-        JMenuItem setName = new JMenuItem("Set Name");
-        file.add(setName);
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.add(file);
-        frameMain.setJMenuBar(menuBar);
-
-        frameMain.setVisible(true);
-        frameMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
+        // Set name
         setName.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -84,5 +57,38 @@ public class Main {
                 }
             }
         });
+
+    }
+
+    // Add message to UI
+    public void addMessage(Object message) {
+        labelMessages.setText(labelMessages.getText() + "<br>" + message.toString());
+    }
+
+    // Set connection list
+    public void setConnClientList(String clientList) {
+        connClientList.setText("<html>" + clientList);
+    }
+
+    public static void main(String[] args) {
+        // Use Mac OS X menu bar
+        if (System.getProperty("os.name").startsWith("Mac")) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+        }
+
+        // Create main frame
+        frameMain = new JFrame("Main");
+        main = new Main();
+        frameMain.setContentPane(main.panelMain);
+
+        // Connect to server
+        try {
+            serverConnection = new Server(new Socket("127.0.0.1", 5004));
+            serverConnection.start();
+            System.out.println("Connected to server");
+        } catch (IOException e){
+            System.out.println("Unable to connect to server");
+            return;
+        }
     }
 }
