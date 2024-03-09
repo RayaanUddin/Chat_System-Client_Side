@@ -34,24 +34,6 @@
           <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
       </hspacer>
-      <component id="33f5a" class="javax.swing.JLabel" binding="labelMessages">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false">
-            <minimum-size width="400" height="-1"/>
-            <preferred-size width="33" height="291"/>
-          </grid>
-        </constraints>
-        <properties>
-          <horizontalAlignment value="2"/>
-          <horizontalTextPosition value="2"/>
-          <text value="This is a test message!!!"/>
-          <verticalAlignment value="1"/>
-          <verticalTextPosition value="1"/>
-        </properties>
-        <clientProperties>
-          <html.disable class="java.lang.Boolean" value="false"/>
-        </clientProperties>
-      </component>
       <vspacer id="41ff4">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
@@ -64,6 +46,28 @@
         <properties>
           <text value="0: ClientTest"/>
         </properties>
+      </component>
+      <component id="33f5a" class="javax.swing.JLabel" binding="labelMessages">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="9" fill="0" indent="0" use-parent-layout="false">
+            <minimum-size width="400" height="-1"/>
+            <preferred-size width="33" height="291"/>
+          </grid>
+        </constraints>
+        <properties>
+          <alignmentX value="1.0"/>
+          <alignmentY value="1.0"/>
+          <autoscrolls value="false"/>
+          <horizontalAlignment value="2"/>
+          <horizontalTextPosition value="2"/>
+          <requestFocusEnabled value="true"/>
+          <text value="This is a test message!!!"/>
+          <verticalAlignment value="1"/>
+          <verticalTextPosition value="1"/>
+        </properties>
+        <clientProperties>
+          <html.disable class="java.lang.Boolean" value="false"/>
+        </clientProperties>
       </component>
     </children>
   </grid>
