@@ -36,7 +36,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        // Connect to server
         try {
             serverConnection = new Server(new Socket("127.0.0.1", 5004));
             serverConnection.start();
@@ -46,6 +46,10 @@ public class Main {
             return;
         }
 
+        // Use Mac OS X menu bar
+        if (System.getProperty("os.name").startsWith("Mac")) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+        }
 
         frameMain = new JFrame("Main");
         main = new Main();
