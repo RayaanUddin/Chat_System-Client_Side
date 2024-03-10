@@ -62,7 +62,7 @@ public class Server extends Thread {
                             System.out.println("Client list received");
                             String clientList = "";
                             for (int i=1; i<packet.getArguments().length; i++) {
-                                clientList = clientList + packet.getArguments()[i] + "<br>";
+                                clientList = "<span style='font-family:'Aria';'>" + clientList + packet.getArguments()[i] + "</span><br>";
                             }
                             System.out.println(clientList);
                             Main.main.setConnClientList(clientList);

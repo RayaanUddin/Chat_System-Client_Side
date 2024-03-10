@@ -1,6 +1,11 @@
 import javax.swing.*;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.*;
 
@@ -12,13 +17,14 @@ public class Main {
     private JTextField textMessage;
     private JButton buttonSend;
     private JPanel panelMain;
-    private JLabel labelMessages;
-    private JLabel connClientList;
+    private JTextArea textAreaMessages;
+    private JTextPane textPaneConnectedClients;
     public static Main main;
 
     public Main() {
         frameMain.setSize(500, 600);
-        labelMessages.setText("<html>");
+        frameMain.setTitle("Chat App");
+        textAreaMessages.setText("");
 
         // Menu bar
         JMenu file =  new JMenu("File");
@@ -58,16 +64,40 @@ public class Main {
             }
         });
 
+        // Send on enter
+        textMessage.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    buttonSend.getActionListeners()[0].actionPerformed(null);
+                }
+            }
+        });
     }
 
     // Add message to UI
     public void addMessage(Object message) {
-        labelMessages.setText(labelMessages.getText() + "<br>" + message.toString());
+        textAreaMessages.setText(textAreaMessages.getText() + message.toString() + "\n");
+        System.out.println("Message added to UI");
     }
 
     // Set connection list
     public void setConnClientList(String clientList) {
-        connClientList.setText("<html>" + clientList);
+        textPaneConnectedClients.setText("");
+        appendToPane(textPaneConnectedClients, clientList);
+    }
+
+    // send html to pane
+    private void appendToPane(JTextPane tp, String msg){
+        HTMLDocument doc = (HTMLDocument)tp.getDocument();
+        HTMLEditorKit editorKit = (HTMLEditorKit)tp.getEditorKit();
+        try {
+            editorKit.insertHTML(doc, doc.getLength(), msg, 0, 0, null);
+            tp.setCaretPosition(doc.getLength());
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
@@ -88,7 +118,6 @@ public class Main {
             System.out.println("Connected to server");
         } catch (IOException e){
             System.out.println("Unable to connect to server");
-            return;
         }
     }
 }
