@@ -1,4 +1,4 @@
-# Chat_System-Client_Side (IN PROGRESS)
+# Chat_System-Client_Side Console Based (Depreciated)
 A chat system server program, which allows clients to communicate with another.
 
 This is my first public project with java, in attempt to learn java syntax, with networking, and create a console based messaging application. This is still an ongoing project.
