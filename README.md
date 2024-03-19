@@ -1,8 +1,10 @@
-# Chat_System-Client_Side (IN PROGRESS)
+# Chat_System-Client_Side (Beta)
 A chat system server program, which allows clients to communicate with another.
 
-This is my first public project with java, This is still an ongoing project.
-Feel free to view the code to build upon or to review and give feedback.
+This is my first public project with java. 
+It is a working project, but still in beta.
+Feel free to view the code and fork it.
+Its UI is very basic however it is functional.
 
 Want to contact me? Rayaan.Uddin@outlook.com
 
